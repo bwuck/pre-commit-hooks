@@ -1,0 +1,80 @@
+# File configures various pre-commit hooks to be used as a git hook with https://github.com/pre-commit/pre-commit
+
+- id: bazel-buildifier
+  name: "Bazel buildifier"
+  description: "Runs `buildifier`, requires buildifier binary."
+  entry: buildifier
+  files: '^(.*/)?(BUILD\.bazel|MODULE\.bazel|BUILD|WORKSPACE)$|\.BUILD$|\.bzl$'
+  language: system
+
+- id: python-yapf
+  name: "Python Yapf"
+  description: "A formatter for Python files."
+  entry: yapf
+  args: [-i, -vv]  # in place
+  language: python
+  types: [python]
+
+- id: go-fmt-import
+  name: "go import/fmt"
+  entry: run-go-fmt-import.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `goimport,gofmt`, requires golang"
+
+- id: go-vet
+  name: "go vet"
+  entry: run-go-vet.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `go vet`, requires golang"
+
+- id: go-unit-tests
+  name: "go unit test"
+  entry: run-go-unit-tests.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `go test`, requires golang"
+
+- id: go-errcheck
+  name: "go errcheck"
+  entry: run-go-errcheck.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `errcheck`, requires github.com/kisielk/errcheck"
+
+- id: go-staticcheck
+  name: "go staticcheck"
+  entry: run-go-staticcheck.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `staticcheck`, install https://staticcheck.io/docs/"
+
+- id: golangci-lint
+  name: "go golangci-lint"
+  entry: run-golangci-lint.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `golangci-lint`, install https://github.com/golangci/golangci-lint"
+
+- id: go-critic
+  name: 'go-critic'
+  entry: run-go-critic.sh
+  files: '\.go$'
+  language: 'script'
+  description: "Runs `go-critic`, install https://github.com/go-critic/go-critic"
+
+- id: go-cyclo
+  name: 'go-cyclo'
+  entry: run-go-cyclo.sh
+  files: '\.go$'
+  language: 'script'
+  description: "Runs `gocyclo`, install https://github.com/fzipp/gocyclo"
+  args: [-over=15]
+
+# Too slow.
+#- id: bazel-test-all
+#  name: "bazel test ..."
+#  entry: run-bazel-test-all.sh
+#  language: "script"
+#  description: "Runs `bazel test ...`, requires bazel"
